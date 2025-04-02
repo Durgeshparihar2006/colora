@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 72.2% 50.6%;
+    --primary-foreground: 0 85.7% 97.3%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 72.2% 50.6%;
+    --radius: 0.5rem;
+  }
+
+  body {
+    @apply bg-[#2D1B2E] text-white min-h-screen;
+  }
+}
+
+@layer components {
+  .game-color-red {
+    background-color: #ff4136;
+  }
+
+  .game-color-green {
+    background-color: #2ecc40;
+  }
+
+  .game-color-violet {
+    background-color: #b10dc9;
+  }
+
+  .color-ball {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+  .countdown-animation {
+    transition: color 0.3s ease;
+  }
+
+  .bet-history-item {
+    @apply bg-[#3D2A3F] p-4 rounded-lg mb-2;
+  }
+
+  .modal {
+    @apply bg-[#2D1B2E] border border-[#3D2A3F] p-6 rounded-lg text-white;
+  }
+
+  .button-primary {
+    @apply bg-[#E84545] hover:bg-[#B83535] text-white px-4 py-2 rounded-lg transition-colors;
+  }
+
+  .button-secondary {
+    @apply bg-[#3D2A3F] hover:bg-[#4D3A4F] text-white px-4 py-2 rounded-lg transition-colors;
+  }
+
+  .input-field {
+    @apply bg-[#3D2A3F] border border-[#4D3A4F] text-white focus:border-[#E84545] 
+    focus:ring-[#E84545] px-4 py-2 rounded-lg outline-none;
+  }
+
+  .nav-link {
+    @apply text-red-700 hover:text-red-900 p-4;
+  }
+  
+  .table-header {
+    @apply bg-red-100 text-red-900 p-4;
+  }
+  
+  .table-row {
+    @apply bg-red-50 text-red-900 hover:bg-red-100 p-4;
+  }
+  
+  .dropdown-menu {
+    @apply bg-red-50 border border-red-200 p-4 rounded-lg;
+  }
+  
+  .dropdown-item {
+    @apply text-red-900 hover:bg-red-100 p-4;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.spin-animation .color-ball {
+  animation: spin 0.5s infinite;
+  animation-delay: calc(var(--ball-index) * 0.1s);
+}
+
+/* Game specific styles */
+.game-container {
+  @apply min-h-screen;
+}
+
+.game-header {
+  @apply p-4;
+}
+
+.game-content {
+  @apply p-4;
+}
+
+.game-timer {
+  font-family: "Courier New", monospace;
+  @apply p-2 rounded-lg;
+}
+
+.payment-option {
+  transition: all 0.2s ease;
+  @apply bg-red-50 hover:bg-red-100 border border-red-200 p-4 rounded-lg;
+}
+
+.payment-option:hover {
+  transform: scale(1.05);
+}
+
+/* Common component styles */
+@layer components {
+  .page-container {
+    @apply bg-red-50 min-h-screen;
+  }
+  
+  .card {
+    @apply bg-red-100 border border-red-200 text-red-900 p-4 rounded-lg;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1s infinite;
+}
+
