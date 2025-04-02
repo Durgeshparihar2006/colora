@@ -17,7 +17,7 @@ import {
   Shield, 
   LogOut, 
   Smartphone,
-  Language,
+  Languages,
   HelpCircle,
   Lock,
   UserPlus,

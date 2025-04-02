@@ -136,7 +136,7 @@ export default function UPIQRCode({ amount, onAmountChange }: UPIQRCodeProps) {
             className="flex-1 bg-[#12141f] border-[#2a2d3d] text-white placeholder:text-gray-500"
           />
           <Button
-            onClick={handleAmountSelect}
+            onClick={() => handleAmountSelect(Number(customAmount))}
             className="bg-[#6c5dd3] hover:bg-[#5a4dbf] text-white"
           >
             Set

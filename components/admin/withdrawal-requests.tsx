@@ -22,7 +22,7 @@ interface WithdrawalRequest {
   amount: number
   upiId: string
   timestamp: string
-  status: "pending" | "completed" | "rejected"
+  status: 'pending' | 'rejected' | 'completed'
 }
 
 export default function WithdrawalRequests() {
@@ -66,7 +66,7 @@ export default function WithdrawalRequests() {
     // Update storage
     localStorage.setItem("withdrawalRequests", JSON.stringify(updatedRequests))
     localStorage.setItem("transactionHistory", JSON.stringify(transactionHistory))
-    setRequests(updatedRequests)
+    setRequests(updatedRequests as WithdrawalRequest[])
 
     toast({
       title: "Withdrawal Approved",
@@ -101,7 +101,7 @@ export default function WithdrawalRequests() {
     // Update storage
     localStorage.setItem("withdrawalRequests", JSON.stringify(updatedRequests))
     localStorage.setItem("transactionHistory", JSON.stringify(transactionHistory))
-    setRequests(updatedRequests)
+    setRequests(updatedRequests as WithdrawalRequest[])
 
     toast({
       title: "Withdrawal Rejected",
