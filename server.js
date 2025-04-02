@@ -99,6 +99,90 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+// ट्रांजैक्शन्स API राउट
+app.get('/api/transactions', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM transactions ORDER BY created_at DESC');
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error fetching transactions:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// यूजर के ट्रांजैक्शन्स प्राप्त करने का राउट
+app.get('/api/transactions/user/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const [rows] = await pool.query(
+      'SELECT * FROM transactions WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error(`Error fetching transactions for user ${req.params.userId}:`, error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// नया ट्रांजैक्शन बनाने का राउट
+app.post('/api/transactions', async (req, res) => {
+  try {
+    const { user_id, amount, type, description } = req.body;
+    
+    // ट्रांजैक्शन बनाएं
+    const [result] = await pool.query(
+      'INSERT INTO transactions (user_id, amount, type, description) VALUES (?, ?, ?, ?)',
+      [user_id, amount, type, description]
+    );
+    
+    // यूजर का बैलेंस अपडेट करें
+    if (type === 'deposit') {
+      await pool.query(
+        'UPDATE users SET balance = balance + ? WHERE id = ?',
+        [amount, user_id]
+      );
+    } else if (type === 'withdraw') {
+      // चेक करें कि यूजर के पास पर्याप्त बैलेंस है
+      const [userRows] = await pool.query('SELECT balance FROM users WHERE id = ?', [user_id]);
+      
+      if (userRows.length === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      
+      const currentBalance = userRows[0].balance;
+      
+      if (currentBalance < amount) {
+        return res.status(400).json({ message: 'Insufficient balance' });
+      }
+      
+      await pool.query(
+        'UPDATE users SET balance = balance - ? WHERE id = ?',
+        [amount, user_id]
+      );
+    }
+    
+    // अपडेटेड यूजर डेटा प्राप्त करें
+    const [userRows] = await pool.query('SELECT * FROM users WHERE id = ?', [user_id]);
+    const { password: _, ...userData } = userRows[0];
+    
+    res.status(201).json({
+      transaction: {
+        id: result.insertId,
+        user_id,
+        amount,
+        type,
+        description,
+        created_at: new Date()
+      },
+      user: userData
+    });
+  } catch (error) {
+    console.error('Error creating transaction:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // सर्वर स्टार्ट करने से पहले डेटाबेस कनेक्शन चेक करें
 async function checkDatabaseConnection() {
   try {
