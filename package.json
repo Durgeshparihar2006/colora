@@ -7,7 +7,7 @@
     "server": "node server.js",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "next build --no-lint",
-    "start": "next start"
+    "start": "node server.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -42,6 +42,7 @@
     "@types/js-cookie": "^3.0.6",
     "autoprefixer": "^10.4.20",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -54,6 +55,7 @@
     "framer-motion": "^12.6.3",
     "input-otp": "1.4.1",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.454.0",
     "mysql2": "^3.14.0",
     "next": "^15.2.4",

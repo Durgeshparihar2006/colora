@@ -26,8 +26,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // लॉगिन राउट
-app.post('/login', async (req, res) => {
-  console.log('Login request received:', req.body);
+app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
@@ -197,7 +196,7 @@ async function checkDatabaseConnection() {
 }
 
 // सर्वर स्टार्ट करें
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3002;
 checkDatabaseConnection().then(isConnected => {
   if (isConnected) {
     app.listen(PORT, () => {

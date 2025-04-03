@@ -1,12 +1,12 @@
-import { TransactionProvider } from '@/app/context/TransactionContext';
+import { AuthProvider } from './context/AuthContext';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <TransactionProvider>
+        <AuthProvider>
           {children}
-        </TransactionProvider>
+        </AuthProvider>
       </body>
     </html>
   );
